@@ -17,6 +17,8 @@ import com.khadar3344.myshop.ui.home.screens.dashboard_screen.DashboardViewModel
 import com.khadar3344.myshop.ui.home.screens.detail_screen.DetailScreen
 import com.khadar3344.myshop.ui.home.screens.favourite_screen.FavouriteScreen
 import com.khadar3344.myshop.ui.home.screens.profile_screen.ProfileScreen
+import com.khadar3344.myshop.ui.maps.MapScreen
+import com.khadar3344.myshop.ui.maps.MapViewModel
 import com.khadar3344.myshop.ui.payment.PaymentScreen
 
 @Composable
@@ -74,6 +76,7 @@ fun AppNavHost(
                 onBackBtnClick = { navHostController.popBackStack() }
             )
         }
+
         composable(Cart.route) {
             CartScreen(
                 onClickedBuyNowButton = {
@@ -87,6 +90,7 @@ fun AppNavHost(
                 onBackBtnClick = { navHostController.popBackStack() }
             )
         }
+
         composable(Profile.route) {
             ProfileScreen(
                 logout = {
@@ -97,13 +101,22 @@ fun AppNavHost(
                     }
                     Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
                 },
-                onBackBtnClick = { navHostController.popBackStack() }
+                onBackBtnClick = { navHostController.popBackStack() },
+                onMapClick = { navHostController.navigate(Map.route) }
             )
         }
+
         composable(Payment.route) {
             PaymentScreen {
                 navHostController.popBackStack()
             }
+        }
+
+        composable(Map.route) {
+            val viewModel: MapViewModel = hiltViewModel()
+            MapScreen(
+                viewModel = viewModel
+            )
         }
     }
 }

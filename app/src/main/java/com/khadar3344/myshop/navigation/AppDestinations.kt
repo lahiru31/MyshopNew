@@ -6,6 +6,7 @@ import androidx.navigation.navArgument
 interface AppDestinations {
     val route: String
 }
+
 object Home : AppDestinations {
     override val route = "home"
 }
@@ -19,7 +20,6 @@ object ProductDetail : AppDestinations {
         navArgument(PRODUCT_ID) { type = NavType.IntType },
     )
 }
-
 
 object Cart : AppDestinations {
     override val route = "cart"
@@ -47,4 +47,8 @@ object Favorite : AppDestinations {
 
 object Payment : AppDestinations {
     override val route = "payment"
+}
+
+object Map : AppDestinations {
+    override val route = "map"
 }

@@ -44,7 +44,8 @@ import com.khadar3344.myshop.util.Resource
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     logout: () -> Unit,
-    onBackBtnClick: () -> Unit
+    onBackBtnClick: () -> Unit,
+    onMapClick: () -> Unit
 ) {
     val profileState by viewModel.userInfo.collectAsState()
     val context = LocalContext.current
@@ -58,7 +59,8 @@ fun ProfileScreen(
             viewModel.updateUserInfoFirebase(user = user)
             Toast.makeText(context, "Update user data successfully", Toast.LENGTH_SHORT).show()
         },
-        onBackBtnClick = onBackBtnClick
+        onBackBtnClick = onBackBtnClick,
+        onMapClick = onMapClick
     )
 }
 
@@ -67,7 +69,8 @@ fun ProfileScreenContent(
     profileState: Resource<User>?,
     logout: () -> Unit,
     updateData: (User) -> Unit,
-    onBackBtnClick: () -> Unit
+    onBackBtnClick: () -> Unit,
+    onMapClick: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (profileState) {
@@ -76,7 +79,8 @@ fun ProfileScreenContent(
                     profileState = profileState.data,
                     logout = logout,
                     updateData = updateData,
-                    onBackBtnClick = onBackBtnClick
+                    onBackBtnClick = onBackBtnClick,
+                    onMapClick = onMapClick
                 )
             }
 
@@ -98,7 +102,8 @@ fun SuccessScreen(
     profileState: User,
     logout: () -> Unit,
     updateData: (User) -> Unit,
-    onBackBtnClick: () -> Unit
+    onBackBtnClick: () -> Unit,
+    onMapClick: () -> Unit
 ) {
     var name: String by remember { mutableStateOf(profileState.name) }
     var phone: String by remember { mutableStateOf(profileState.phone) }
@@ -216,8 +221,14 @@ fun SuccessScreen(
                 )
                 updateData(user)
             }
-
         }
+        
+        Spacer(modifier = Modifier.height(10.dp))
+        CustomDefaultBtn(shapeSize = 50f, btnText = "View on Map") { 
+            onMapClick() 
+        }
+        
+        Spacer(modifier = Modifier.height(10.dp))
         CustomDefaultBtn(shapeSize = 50f, btnText = "Logout") { logout() }
     }
 }

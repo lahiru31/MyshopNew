@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberMarkerState
 import com.khadar3344.myshop.ui.theme.MyShopTheme
 
 @Composable
@@ -29,10 +30,11 @@ fun MapScreen(viewModel: MapViewModel) {
                 modifier = Modifier.fillMaxSize(),
                 cameraPositionState = cameraPositionState
             ) {
-                markers.forEach { marker ->
+                markers.forEach { markerPosition ->
+                    val state = rememberMarkerState(position = markerPosition)
                     Marker(
-                        position = marker,
-                        title = "Marker at ${marker.latitude}, ${marker.longitude}"
+                        state = state,
+                        title = "Marker at ${markerPosition.latitude}, ${markerPosition.longitude}"
                     )
                 }
             }

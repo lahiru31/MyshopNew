@@ -17,12 +17,11 @@ import com.khadar3344.myshop.ui.theme.MyShopTheme
 fun MapScreen(viewModel: MapViewModel) {
     val markers = viewModel.markers
     val sydney = remember { LatLng(-34.0, 151.0) }
-    val cameraPositionState = rememberCameraPositionState {
-        this.position = CameraPosition.Builder()
-            .target(sydney)
-            .zoom(10f)
-            .build()
-    }
+    val cameraPositionState = rememberCameraPositionState()
+    cameraPositionState.position = CameraPosition.Builder()
+        .target(sydney)
+        .zoom(10f)
+        .build()
 
     MyShopTheme {
         Surface(modifier = Modifier.fillMaxSize()) {

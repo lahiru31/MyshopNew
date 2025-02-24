@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.maps.android.compose.CameraPositionState
 import com.khadar3344.myshop.ui.theme.MyShopTheme
 
 @Composable
@@ -19,10 +19,9 @@ fun MapScreen(viewModel: MapViewModel) {
 
     MyShopTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
+            val sydney = LatLng(-34.0, 151.0)
             val cameraPositionState = rememberCameraPositionState {
-                position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(
-                    com.google.android.gms.maps.model.LatLng(-34.0, 151.0), 10f
-                )
+                this.position = CameraPosition.fromLatLngZoom(sydney, 10f)
             }
 
             GoogleMap(

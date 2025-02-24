@@ -1,46 +1,16 @@
 package com.khadar3344.myshop.di
 
-import com.khadar3344.myshop.notifications.NotificationHelper
-import com.khadar3344.myshop.data.network.api.ApiService
-import com.khadar3344.myshop.data.network.repository.NetworkRepository
-import com.khadar3344.myshop.data.network.repository.NetworkRepositoryImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import javax.inject.Singleton
-
-@InstallIn(SingletonComponent::class)
-@Module
-class NetworkModule {
-    @Provides
-    @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideNetworkRepository(apiService: ApiService): NetworkRepository {
-        return NetworkRepositoryImpl(apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideNotificationHelper(context: Context): NotificationHelper {
-        return NotificationHelper(context)
-    }
-}
-
 import android.annotation.SuppressLint
+import android.content.Context
 import com.khadar3344.myshop.data.network.api.ApiService
 import com.khadar3344.myshop.data.network.repository.NetworkRepository
 import com.khadar3344.myshop.data.network.repository.NetworkRepositoryImpl
+import com.khadar3344.myshop.notifications.NotificationHelper
 import com.khadar3344.myshop.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -49,6 +19,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    
     @SuppressLint("SuspiciousIndentation")
     @Provides
     @Singleton
@@ -63,6 +34,12 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideNetworkRepository(apiService: ApiService): NetworkRepository {
-        return NetworkRepositoryImpl(apiService = apiService)
+        return NetworkRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationHelper(@ApplicationContext context: Context): NotificationHelper {
+        return NotificationHelper(context)
     }
 }

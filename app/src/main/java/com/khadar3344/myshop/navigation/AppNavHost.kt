@@ -19,13 +19,16 @@ import com.khadar3344.myshop.ui.home.screens.favourite_screen.FavouriteScreen
 import com.khadar3344.myshop.ui.home.screens.profile_screen.ProfileScreen
 import com.khadar3344.myshop.ui.maps.MapScreen
 import com.khadar3344.myshop.ui.maps.MapViewModel
+import com.khadar3344.myshop.telephony.TelephonyManager
 import com.khadar3344.myshop.ui.payment.PaymentScreen
+import javax.inject.Inject
 
 @Composable
 fun AppNavHost(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
-    onBadgeCountChange: (Int) -> Unit
+    onBadgeCountChange: (Int) -> Unit,
+    telephonyManager: TelephonyManager
 ) {
     val context = LocalContext.current
     NavHost(
@@ -93,6 +96,7 @@ fun AppNavHost(
 
         composable(Profile.route) {
             ProfileScreen(
+                telephonyManager = telephonyManager,
                 logout = {
                     navHostController.navigate(SignIn.route) {
                         popUpTo(SignIn.route) {

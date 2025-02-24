@@ -46,7 +46,7 @@ import javax.inject.Inject
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
-    telephonyManager: TelephonyManager = hiltViewModel(),
+    telephonyManager: TelephonyManager,
     logout: () -> Unit,
     onBackBtnClick: () -> Unit,
     onMapClick: () -> Unit

@@ -1,6 +1,7 @@
 package com.khadar3344.myshop.ui.home.screens.profile_screen
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,13 +37,16 @@ import com.khadar3344.myshop.R
 import com.khadar3344.myshop.components.CustomAppBar
 import com.khadar3344.myshop.components.CustomDefaultBtn
 import com.khadar3344.myshop.model.User
+import com.khadar3344.myshop.telephony.TelephonyManager
 import com.khadar3344.myshop.ui.home.component.Error
 import com.khadar3344.myshop.ui.home.component.Loading
 import com.khadar3344.myshop.util.Resource
+import javax.inject.Inject
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
+    telephonyManager: TelephonyManager = hiltViewModel(),
     logout: () -> Unit,
     onBackBtnClick: () -> Unit,
     onMapClick: () -> Unit
@@ -51,6 +55,7 @@ fun ProfileScreen(
     val context = LocalContext.current
     ProfileScreenContent(
         profileState = profileState,
+        telephonyManager = telephonyManager,
         logout = {
             viewModel.logout()
             logout()
@@ -67,6 +72,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileScreenContent(
     profileState: Resource<User>?,
+    telephonyManager: TelephonyManager,
     logout: () -> Unit,
     updateData: (User) -> Unit,
     onBackBtnClick: () -> Unit,
@@ -77,6 +83,7 @@ fun ProfileScreenContent(
             is Resource.Success -> {
                 SuccessScreen(
                     profileState = profileState.data,
+                    telephonyManager = telephonyManager,
                     logout = logout,
                     updateData = updateData,
                     onBackBtnClick = onBackBtnClick,
@@ -100,6 +107,7 @@ fun ProfileScreenContent(
 @Composable
 fun SuccessScreen(
     profileState: User,
+    telephonyManager: TelephonyManager,
     logout: () -> Unit,
     updateData: (User) -> Unit,
     onBackBtnClick: () -> Unit,
@@ -168,12 +176,17 @@ fun SuccessScreen(
             trailingIcon = {
                 Icon(
                     painter = painterResource(id = R.drawable.phone),
-                    contentDescription = "Phone"
+                    contentDescription = "Phone",
+                    modifier = Modifier.clickable {
+                        if (phone.isNotEmpty()) {
+                            telephonyManager.makePhoneCall(phone)
+                        }
+                    }
                 )
             },
             singleLine = true,
             visualTransformation = VisualTransformation.None,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
             isError = phoneNumberErrorState.value,
             keyboardActions = KeyboardActions(
                 onNext = {}
@@ -191,7 +204,8 @@ fun SuccessScreen(
             trailingIcon = {
                 Icon(
                     painter = painterResource(id = R.drawable.location_point),
-                    contentDescription = "Address"
+                    contentDescription = "Address",
+                    modifier = Modifier.clickable { onMapClick() }
                 )
             },
             singleLine = true,

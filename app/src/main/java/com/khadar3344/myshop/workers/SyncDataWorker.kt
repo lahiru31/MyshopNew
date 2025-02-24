@@ -7,6 +7,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.khadar3344.myshop.data.network.repository.NetworkRepository
 import com.khadar3344.myshop.notifications.NotificationHelper
+import com.khadar3344.myshop.util.Resource
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -25,16 +26,21 @@ class SyncDataWorker @AssistedInject constructor(
             Log.d("SyncDataWorker", "Starting sync operation")
             
             // Perform background sync operations
-            val products = networkRepository.getProductsList()
-            
-            // Show notification on successful sync
-            notificationHelper.showNotification(
-                "Sync Complete",
-                "Products data has been updated successfully",
-                SYNC_NOTIFICATION_ID
-            )
-            
-            Result.success()
+            when (val result = networkRepository.getProductsListFromApi()) {
+                is Resource.Success -> {
+                    // Show notification on successful sync
+                    notificationHelper.showNotification(
+                        "Sync Complete",
+                        "Products data has been updated successfully",
+                        SYNC_NOTIFICATION_ID
+                    )
+                    Result.success()
+                }
+                is Resource.Failure -> {
+                    Log.e("SyncDataWorker", "Error during sync", result.exception)
+                    Result.retry()
+                }
+            }
         } catch (e: Exception) {
             Log.e("SyncDataWorker", "Error during sync", e)
             Result.retry()

@@ -2,24 +2,23 @@ package com.khadar3344.myshop.workers
 
 import android.content.Context
 import android.util.Log
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.khadar3344.myshop.data.network.repository.NetworkRepository
 import com.khadar3344.myshop.notifications.NotificationHelper
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class SyncDataWorker(
-    appContext: Context,
-    workerParams: WorkerParameters
+@HiltWorker
+class SyncDataWorker @AssistedInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParams: WorkerParameters,
+    private val networkRepository: NetworkRepository,
+    private val notificationHelper: NotificationHelper
 ) : CoroutineWorker(appContext, workerParams) {
-
-    @Inject
-    lateinit var networkRepository: NetworkRepository
-
-    @Inject
-    lateinit var notificationHelper: NotificationHelper
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {

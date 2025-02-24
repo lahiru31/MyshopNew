@@ -1,5 +1,38 @@
 package com.khadar3344.myshop.di
 
+import com.khadar3344.myshop.notifications.NotificationHelper
+import com.khadar3344.myshop.data.network.api.ApiService
+import com.khadar3344.myshop.data.network.repository.NetworkRepository
+import com.khadar3344.myshop.data.network.repository.NetworkRepositoryImpl
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import javax.inject.Singleton
+
+@InstallIn(SingletonComponent::class)
+@Module
+class NetworkModule {
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkRepository(apiService: ApiService): NetworkRepository {
+        return NetworkRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationHelper(context: Context): NotificationHelper {
+        return NotificationHelper(context)
+    }
+}
+
 import android.annotation.SuppressLint
 import com.khadar3344.myshop.data.network.api.ApiService
 import com.khadar3344.myshop.data.network.repository.NetworkRepository

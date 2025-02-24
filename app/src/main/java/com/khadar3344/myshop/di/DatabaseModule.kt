@@ -1,5 +1,29 @@
 package com.khadar3344.myshop.di
 
+import com.khadar3344.myshop.multimedia.MediaManager
+import com.khadar3344.myshop.sensors.SensorController
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@InstallIn(SingletonComponent::class)
+@Module
+class DatabaseModule {
+    @Provides
+    @Singleton
+    fun provideMediaManager(context: Context): MediaManager {
+        return MediaManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSensorController(context: Context): SensorController {
+        return SensorController(context)
+    }
+}
+
 import android.content.Context
 import androidx.room.Room
 import com.khadar3344.myshop.data.local.AppDatabase

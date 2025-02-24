@@ -13,8 +13,8 @@ import javax.inject.Inject
 class MediaManager @Inject constructor(private val context: Context) {
     private var mediaPlayer: MediaPlayer? = null
     private var mediaRecorder: MediaRecorder? = null
-    private var isRecording = false
-    private var isPlaying = false
+    private var isRecording: Boolean = false
+    private var isPlaying: Boolean = false
 
     fun startRecording(outputFile: File) {
         try {

@@ -13,16 +13,12 @@ import javax.inject.Inject
 class MediaManager @Inject constructor(private val context: Context) {
     private var mediaPlayer: MediaPlayer? = null
     private var mediaRecorder: MediaRecorder? = null
-    private var isRecordingState: Boolean = false
-    private var isPlayingState: Boolean = false
+    private var isRecording: Boolean = false
+    private var isPlaying: Boolean = false
 
     fun startRecording(outputFile: File) {
         try {
-            mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                MediaRecorder(context)
-            } else {
-                MediaRecorder()
-            }.apply {
+            mediaRecorder = MediaRecorder(context).apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
@@ -31,7 +27,7 @@ class MediaManager @Inject constructor(private val context: Context) {
                 try {
                     prepare()
                     start()
-                    isRecordingState = true
+                    isRecording = true
                     Log.d("MediaManager", "Started recording to ${outputFile.absolutePath}")
                 } catch (e: IOException) {
                     Log.e("MediaManager", "Failed to start recording", e)
@@ -50,7 +46,7 @@ class MediaManager @Inject constructor(private val context: Context) {
                 release()
             }
             mediaRecorder = null
-            isRecordingState = false
+            isRecording = false
             Log.d("MediaManager", "Stopped recording")
         } catch (e: Exception) {
             Log.e("MediaManager", "Error stopping recording", e)
@@ -63,10 +59,10 @@ class MediaManager @Inject constructor(private val context: Context) {
                 setDataSource(context, audioUri)
                 prepare()
                 start()
-                isPlayingState = true
+                isPlaying = true
                 
                 setOnCompletionListener {
-                    isPlayingState = false
+                    isPlaying = false
                     release()
                     mediaPlayer = null
                 }
@@ -86,15 +82,15 @@ class MediaManager @Inject constructor(private val context: Context) {
                 release()
             }
             mediaPlayer = null
-            isPlayingState = false
+            isPlaying = false
             Log.d("MediaManager", "Stopped playing audio")
         } catch (e: Exception) {
             Log.e("MediaManager", "Error stopping playback", e)
         }
     }
 
-    fun isRecording(): Boolean = isRecordingState
-    fun isPlaying(): Boolean = isPlayingState
+    fun isRecording(): Boolean = isRecording
+    fun isPlaying(): Boolean = isPlaying
 
     fun release() {
         stopRecording()

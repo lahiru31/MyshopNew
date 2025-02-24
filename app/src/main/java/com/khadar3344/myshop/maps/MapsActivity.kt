@@ -1,35 +1,49 @@
 package com.khadar3344.myshop.maps
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.CameraUpdateFactory
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.khadar3344.myshop.R
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.rememberMarkerState
+import com.khadar3344.myshop.ui.theme.MyShopTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
-    private lateinit var mMap: GoogleMap
-
+@AndroidEntryPoint
+class MapsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        setContent {
+            MyShopTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    MapContent()
+                }
+            }
+        }
     }
+}
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        // Add a marker in a specific location and move the camera
-        val location = LatLng(-34.0, 151.0) // Example coordinates
-        mMap.addMarker(MarkerOptions().position(location).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+@Composable
+fun MapContent() {
+    GoogleMap(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        val sydney = LatLng(-34.0, 151.0)
+        val markerState = rememberMarkerState(position = sydney)
+        Marker(
+            state = markerState,
+            title = "Marker in Sydney"
+        )
     }
 }

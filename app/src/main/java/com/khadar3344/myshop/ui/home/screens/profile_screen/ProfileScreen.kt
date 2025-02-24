@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.foundation.text.KeyboardOptions
 import com.khadar3344.myshop.R
 import com.khadar3344.myshop.components.CustomAppBar
 import com.khadar3344.myshop.components.CustomDefaultBtn
@@ -135,7 +137,10 @@ fun SuccessScreen(
             },
             singleLine = true,
             visualTransformation = VisualTransformation.None,
-            keyboardOptions = KeyboardType.Text.toKeyboardOptions(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
             isError = nameErrorState.value,
             modifier = Modifier.fillMaxWidth()
         )
@@ -159,7 +164,10 @@ fun SuccessScreen(
             },
             singleLine = true,
             visualTransformation = VisualTransformation.None,
-            keyboardOptions = KeyboardType.Phone.toKeyboardOptions(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Phone,
+                imeAction = ImeAction.Next
+            ),
             isError = phoneNumberErrorState.value,
             modifier = Modifier.fillMaxWidth()
         )
@@ -179,7 +187,10 @@ fun SuccessScreen(
             },
             singleLine = true,
             visualTransformation = VisualTransformation.None,
-            keyboardOptions = KeyboardType.Text.toKeyboardOptions(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
             isError = addressErrorState.value,
             modifier = Modifier.fillMaxWidth()
         )

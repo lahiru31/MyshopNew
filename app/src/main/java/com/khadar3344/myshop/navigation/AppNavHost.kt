@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.khadar3344.myshop.telephony.TelephonyManager
 import com.khadar3344.myshop.ui.auth.screens.ForgotPasswordScreen
 import com.khadar3344.myshop.ui.auth.screens.LoginScreen
 import com.khadar3344.myshop.ui.auth.screens.SignUpScreen
@@ -17,11 +18,10 @@ import com.khadar3344.myshop.ui.home.screens.dashboard_screen.DashboardViewModel
 import com.khadar3344.myshop.ui.home.screens.detail_screen.DetailScreen
 import com.khadar3344.myshop.ui.home.screens.favourite_screen.FavouriteScreen
 import com.khadar3344.myshop.ui.home.screens.profile_screen.ProfileScreen
+import com.khadar3344.myshop.ui.home.screens.profile_screen.ProfileViewModel
 import com.khadar3344.myshop.ui.maps.MapScreen
 import com.khadar3344.myshop.ui.maps.MapViewModel
-import com.khadar3344.myshop.telephony.TelephonyManager
 import com.khadar3344.myshop.ui.payment.PaymentScreen
-import javax.inject.Inject
 
 @Composable
 fun AppNavHost(
@@ -95,7 +95,9 @@ fun AppNavHost(
         }
 
         composable(Profile.route) {
+            val viewModel: ProfileViewModel = hiltViewModel()
             ProfileScreen(
+                viewModel = viewModel,
                 telephonyManager = telephonyManager,
                 logout = {
                     navHostController.navigate(SignIn.route) {

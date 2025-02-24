@@ -1,5 +1,30 @@
-# My Shop
-My Shop App is a sample e-commerce app built with [Jetpack Compose](https://developer.android.com/jetpack/compose/), Android Architecture Components and using kotlin as programming language.
+# MyShop - Modern Android E-commerce App
+
+MyShop is a comprehensive e-commerce application built with modern Android development tools and practices. It showcases the implementation of various Android features and best practices.
+
+## Features
+
+- **Product Browsing & Shopping**
+  - Browse products by category
+  - View detailed product information
+  - Add products to cart
+  - Manage favorites
+
+- **User Authentication**
+  - Firebase Authentication integration
+  - User profile management
+  - Secure login/signup
+
+- **Maps Integration**
+  - Google Maps integration
+  - Location-based features
+  - Interactive map view with markers
+
+- **Device Features**
+  - Modern telephony management
+  - Push notifications
+  - Media handling
+  - Sensor integration
 
 ## Libraries And Technologies used
 -  [Jetpack Compose](https://developer.android.com/jetpack/compose/) for UI
@@ -17,10 +42,10 @@ My Shop App is a sample e-commerce app built with [Jetpack Compose](https://deve
 -  [Desugaring](https://developer.android.com/studio/write/java8-support-table) : API desugaring allows developers to use more APIs without requiring a minimum API level for your app.
 -  [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences) :  Store private primitive data in key-value pairs.
 -  Accompanist [Pager layout](https://google.github.io/accompanist/pager/)
-
+-  [Google Maps](https://developers.google.com/maps/documentation/android-sdk/overview) for location-based features
 
 ## API
-E-commerce App uses the [DummyJson](https://dummyjson.com/) for constructing RESTful API.
+MyShop uses the [DummyJson](https://dummyjson.com/) for constructing RESTful API.
 And also uses [Firebase](https://firebase.google.com/) for authentication and firestore.
 
 ## App Preview
@@ -35,5 +60,10 @@ And also uses [Firebase](https://firebase.google.com/) for authentication and fi
   <img src="https://github.com/Khadar3344/My-Shop/assets/79355446/bbe9518a-e309-475f-822c-e7356a17addf" widht="300" height="600">
   <img src="https://github.com/Khadar3344/My-Shop/assets/79355446/aeeb8a41-a194-49b0-99ba-9e9520eac3f8" widht="300" height="600">
   <img src="https://github.com/Khadar3344/My-Shop/assets/79355446/e5f34630-5d73-4d2c-8b6b-93428fb92b37" widht="300" height="600">
-  
 </div>
+
+## Recent Updates
+- Added Google Maps integration with interactive markers
+- Modernized telephony management using TelephonyCallback API
+- Enhanced location-based features
+- Improved UI/UX with Material3 components

@@ -16,22 +16,22 @@ object Dimensions {
     val spacing_small
         @Composable
         @ReadOnlyComposable
-        get() = (screenWidth * 0.02f).coerceAtLeast(4.dp)
+        get() = (screenWidth.value * 0.02f).dp.coerceAtLeast(4.dp)
 
     val spacing_medium
         @Composable
         @ReadOnlyComposable
-        get() = (screenWidth * 0.04f).coerceAtLeast(8.dp)
+        get() = (screenWidth.value * 0.04f).dp.coerceAtLeast(8.dp)
 
     val spacing_large
         @Composable
         @ReadOnlyComposable
-        get() = (screenWidth * 0.06f).coerceAtLeast(16.dp)
+        get() = (screenWidth.value * 0.06f).dp.coerceAtLeast(16.dp)
 
     val spacing_xlarge
         @Composable
         @ReadOnlyComposable
-        get() = (screenWidth * 0.08f).coerceAtLeast(32.dp)
+        get() = (screenWidth.value * 0.08f).dp.coerceAtLeast(32.dp)
 
     // Text sizes
     val text_small
@@ -63,27 +63,27 @@ object Dimensions {
     val button_height
         @Composable
         @ReadOnlyComposable
-        get() = (48.dp * screenWidth / 360.dp).coerceAtLeast(40.dp)
+        get() = (48f * (screenWidth.value / 360f)).dp.coerceAtLeast(40.dp)
 
     val input_field_height
         @Composable
         @ReadOnlyComposable
-        get() = (56.dp * screenWidth / 360.dp).coerceAtLeast(48.dp)
+        get() = (56f * (screenWidth.value / 360f)).dp.coerceAtLeast(48.dp)
 
     val image_size_small
         @Composable
         @ReadOnlyComposable
-        get() = (screenWidth * 0.1f).coerceAtLeast(32.dp)
+        get() = (screenWidth.value * 0.1f).dp.coerceAtLeast(32.dp)
 
     val image_size_medium
         @Composable
         @ReadOnlyComposable
-        get() = (screenWidth * 0.2f).coerceAtLeast(64.dp)
+        get() = (screenWidth.value * 0.2f).dp.coerceAtLeast(64.dp)
 
     val image_size_large
         @Composable
         @ReadOnlyComposable
-        get() = (screenWidth * 0.3f).coerceAtLeast(96.dp)
+        get() = (screenWidth.value * 0.3f).dp.coerceAtLeast(96.dp)
 
     // Grid columns based on screen width
     val gridColumns

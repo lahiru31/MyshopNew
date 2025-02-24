@@ -39,6 +39,7 @@ import com.khadar3344.myshop.navigation.SignIn
 import com.khadar3344.myshop.navigation.SignUp
 import com.khadar3344.myshop.ui.home.screens.cart_screen.CartViewModel
 import com.khadar3344.myshop.telephony.TelephonyManager
+import com.khadar3344.myshop.multimedia.MediaManager
 import com.khadar3344.myshop.ui.theme.MyShopTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -48,6 +49,8 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var telephonyManager: TelephonyManager
 
+    @Inject
+    lateinit var mediaManager: MediaManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,12 +60,18 @@ class MainActivity : ComponentActivity() {
                 val badgeCount by cartViewModel.badgeCount.collectAsState()
                 ShowScreen(
                     badgeCount = badgeCount,
-                    telephonyManager = telephonyManager
+                    telephonyManager = telephonyManager,
+                    mediaManager = mediaManager
                 ) { newBadgeCount ->
                     cartViewModel.updateBadgeCount(newBadgeCount)
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaManager.release()
     }
 }
 
@@ -72,9 +81,9 @@ private fun ShowScreen(
     appState: EcommerceAppState = rememberEcommerceAppState(),
     badgeCount: Int,
     telephonyManager: TelephonyManager,
+    mediaManager: MediaManager,
     onBadgeCountChange: (Int) -> Unit
 ) {
-    // A surface container using the 'background' color from the theme
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -107,14 +116,13 @@ private fun ShowScreen(
                     navHostController = navHostController,
                     modifier = Modifier.padding(paddingValues),
                     onBadgeCountChange = onBadgeCountChange,
-                    telephonyManager = telephonyManager
+                    telephonyManager = telephonyManager,
+                    mediaManager = mediaManager
                 )
-
             }
         }
     }
 }
-
 
 @SuppressLint("RememberReturnType")
 @Composable
@@ -135,7 +143,6 @@ class EcommerceAppState(
         isOnline = checkIfOnline()
     }
 
-
     private fun checkIfOnline(): Boolean {
         val cm = getSystemService(context, ConnectivityManager::class.java)
         val network = cm?.activeNetwork ?: return false
@@ -145,7 +152,6 @@ class EcommerceAppState(
                capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 }
-
 
 @Composable
 fun OfflineDialog(onRetry: () -> Unit) {

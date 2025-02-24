@@ -5,10 +5,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -22,15 +27,18 @@ import com.khadar3344.myshop.components.CustomAppBar
 import com.khadar3344.myshop.components.CustomDefaultBtn
 import com.khadar3344.myshop.model.User
 import com.khadar3344.myshop.telephony.TelephonyManager
+import com.khadar3344.myshop.multimedia.MediaManager
 import com.khadar3344.myshop.ui.home.component.Error
 import com.khadar3344.myshop.ui.home.component.Loading
 import com.khadar3344.myshop.util.Dimensions
 import com.khadar3344.myshop.util.Resource
+import java.io.File
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
     telephonyManager: TelephonyManager,
+    mediaManager: MediaManager,
     logout: () -> Unit,
     onBackBtnClick: () -> Unit,
     onMapClick: () -> Unit
@@ -40,6 +48,7 @@ fun ProfileScreen(
     ProfileScreenContent(
         profileState = profileState,
         telephonyManager = telephonyManager,
+        mediaManager = mediaManager,
         logout = {
             viewModel.logout()
             logout()
@@ -57,6 +66,7 @@ fun ProfileScreen(
 fun ProfileScreenContent(
     profileState: Resource<User>?,
     telephonyManager: TelephonyManager,
+    mediaManager: MediaManager,
     logout: () -> Unit,
     updateData: (User) -> Unit,
     onBackBtnClick: () -> Unit,
@@ -68,6 +78,7 @@ fun ProfileScreenContent(
                 SuccessScreen(
                     profileState = profileState.data,
                     telephonyManager = telephonyManager,
+                    mediaManager = mediaManager,
                     logout = logout,
                     updateData = updateData,
                     onBackBtnClick = onBackBtnClick,
@@ -89,6 +100,7 @@ fun ProfileScreenContent(
 fun SuccessScreen(
     profileState: User,
     telephonyManager: TelephonyManager,
+    mediaManager: MediaManager,
     logout: () -> Unit,
     updateData: (User) -> Unit,
     onBackBtnClick: () -> Unit,
@@ -100,6 +112,8 @@ fun SuccessScreen(
     val nameErrorState = remember { mutableStateOf(false) }
     val phoneNumberErrorState = remember { mutableStateOf(false) }
     val addressErrorState = remember { mutableStateOf(false) }
+    var isRecording by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     Column(
@@ -193,6 +207,41 @@ fun SuccessScreen(
             isError = addressErrorState.value,
             modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(Dimensions.spacing_medium))
+
+        // Voice Note Recording Section
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = Dimensions.spacing_small),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Voice Notes",
+                fontSize = Dimensions.text_medium,
+                fontWeight = FontWeight.Bold
+            )
+            IconButton(
+                onClick = {
+                    if (isRecording) {
+                        mediaManager.stopRecording()
+                        Toast.makeText(context, "Recording stopped", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val file = File(context.filesDir, "voice_note_${System.currentTimeMillis()}.mp4")
+                        mediaManager.startRecording(file)
+                        Toast.makeText(context, "Recording started", Toast.LENGTH_SHORT).show()
+                    }
+                    isRecording = !isRecording
+                }
+            ) {
+                Icon(
+                    imageVector = if (isRecording) Icons.Default.Stop else Icons.Default.Mic,
+                    contentDescription = if (isRecording) "Stop Recording" else "Start Recording"
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(Dimensions.spacing_large))
 

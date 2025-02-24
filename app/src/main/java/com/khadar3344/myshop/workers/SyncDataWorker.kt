@@ -37,7 +37,7 @@ class SyncDataWorker @AssistedInject constructor(
                     Result.success()
                 }
                 is Resource.Failure<*> -> {
-                    Log.e("SyncDataWorker", "Error during sync", result.exception)
+                    Log.e("SyncDataWorker", "Error during sync", result.exception as? Throwable)
                     Result.retry()
                 }
                 is Resource.Loading -> {

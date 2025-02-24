@@ -13,8 +13,8 @@ import javax.inject.Inject
 class MediaManager @Inject constructor(private val context: Context) {
     private var mediaPlayer: MediaPlayer? = null
     private var mediaRecorder: MediaRecorder? = null
-    private var isRecording: Boolean = false
-    private var isPlaying: Boolean = false
+    private var isRecordingState: Boolean = false
+    private var isPlayingState: Boolean = false
 
     fun startRecording(outputFile: File) {
         try {
@@ -31,7 +31,7 @@ class MediaManager @Inject constructor(private val context: Context) {
                 try {
                     prepare()
                     start()
-                    isRecording = true
+                    isRecordingState = true
                     Log.d("MediaManager", "Started recording to ${outputFile.absolutePath}")
                 } catch (e: IOException) {
                     Log.e("MediaManager", "Failed to start recording", e)
@@ -50,7 +50,7 @@ class MediaManager @Inject constructor(private val context: Context) {
                 release()
             }
             mediaRecorder = null
-            isRecording = false
+            isRecordingState = false
             Log.d("MediaManager", "Stopped recording")
         } catch (e: Exception) {
             Log.e("MediaManager", "Error stopping recording", e)
@@ -63,10 +63,10 @@ class MediaManager @Inject constructor(private val context: Context) {
                 setDataSource(context, audioUri)
                 prepare()
                 start()
-                isPlaying = true
+                isPlayingState = true
                 
                 setOnCompletionListener {
-                    isPlaying = false
+                    isPlayingState = false
                     release()
                     mediaPlayer = null
                 }
@@ -86,15 +86,15 @@ class MediaManager @Inject constructor(private val context: Context) {
                 release()
             }
             mediaPlayer = null
-            isPlaying = false
+            isPlayingState = false
             Log.d("MediaManager", "Stopped playing audio")
         } catch (e: Exception) {
             Log.e("MediaManager", "Error stopping playback", e)
         }
     }
 
-    fun isRecording(): Boolean = isRecording
-    fun isPlaying(): Boolean = isPlaying
+    fun isRecording(): Boolean = isRecordingState
+    fun isPlaying(): Boolean = isPlayingState
 
     fun release() {
         stopRecording()

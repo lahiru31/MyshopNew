@@ -27,7 +27,7 @@ class MediaManager @Inject constructor(private val context: Context) {
                 try {
                     prepare()
                     start()
-                    isRecording = true
+                    this@MediaManager.isRecording = true
                     Log.d("MediaManager", "Started recording to ${outputFile.absolutePath}")
                 } catch (e: IOException) {
                     Log.e("MediaManager", "Failed to start recording", e)
@@ -59,10 +59,10 @@ class MediaManager @Inject constructor(private val context: Context) {
                 setDataSource(context, audioUri)
                 prepare()
                 start()
-                isPlaying = true
+                this@MediaManager.isPlaying = true
                 
                 setOnCompletionListener {
-                    isPlaying = false
+                    this@MediaManager.isPlaying = false
                     release()
                     mediaPlayer = null
                 }

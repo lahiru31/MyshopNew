@@ -12,8 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.khadar3344.myshop.EcommerceAppState
+import com.khadar3344.myshop.util.Dimensions
 import com.khadar3344.myshop.OfflineDialog
 import com.khadar3344.myshop.rememberEcommerceAppState
 import kotlinx.coroutines.delay
@@ -39,13 +39,14 @@ fun Error(
         }
         if (showSnackbar) {
             Snackbar(
-                modifier = modifier.padding(16.dp),
+                modifier = modifier.padding(Dimensions.spacing_medium),
                 contentColor = MaterialTheme.colorScheme.primary,
                 shape = MaterialTheme.shapes.medium
             ) {
                 Text(
                     text = message,
-                    color = MaterialTheme.colorScheme.onPrimary
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = Dimensions.text_medium
                 )
             }
         }

@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.khadar3344.myshop.util.Dimensions
 
 @Composable
 fun CustomDefaultBtn(
@@ -24,8 +24,10 @@ fun CustomDefaultBtn(
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 20.dp, bottom = 20.dp)
-            .height(50.dp)
+            .padding(
+                vertical = Dimensions.spacing_large
+            )
+            .height(Dimensions.button_height)
             .clip(RoundedCornerShape(shapeSize.dp)),
         onClick = {
             onClick()
@@ -34,7 +36,10 @@ fun CustomDefaultBtn(
             contentColor = Color.White
         ),
     ) {
-        Text(text = btnText, fontSize = 16.sp)
+        Text(
+            text = btnText, 
+            fontSize = Dimensions.text_medium
+        )
     }
 }
 

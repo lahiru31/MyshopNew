@@ -34,7 +34,7 @@ fun ProductItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(Dimensions.spacing_small)
             .clickable { onProductClicked.invoke(product) },
         elevation = CardDefaults.cardElevation(5.dp),
         shape = RoundedCornerShape(5.dp)

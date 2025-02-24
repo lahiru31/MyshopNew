@@ -32,7 +32,7 @@ fun CategoryTabRow(
                 content =  {
                     Text(
                         text = category,
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 2.dp)
+                        modifier = Modifier.padding(vertical = Dimensions.spacing_small, horizontal = Dimensions.spacing_small)
                     )
                 }
             )

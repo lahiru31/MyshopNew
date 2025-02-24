@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
+import com.khadar3344.myshop.util.Dimensions
 
 @Composable
 fun CustomTextField(
@@ -54,6 +54,6 @@ fun CustomTextField(
         keyboardActions = KeyboardActions(
             onNext = {}
         ),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().padding(vertical = Dimensions.spacing_small)
     )
 }

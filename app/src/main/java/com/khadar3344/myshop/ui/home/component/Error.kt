@@ -11,11 +11,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.khadar3344.myshop.EcommerceAppState
-import com.khadar3344.myshop.util.Dimensions
 import com.khadar3344.myshop.OfflineDialog
 import com.khadar3344.myshop.rememberEcommerceAppState
+import com.khadar3344.myshop.util.Dimensions
 import kotlinx.coroutines.delay
 
 @Composable
@@ -34,7 +33,6 @@ fun Error(
             if (showSnackbar) {
                 delay(2000)
                 showSnackbar = false
-
             }
         }
         if (showSnackbar) {
@@ -51,10 +49,4 @@ fun Error(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ErrorPreview() {
-    Error(message = "Error")
 }

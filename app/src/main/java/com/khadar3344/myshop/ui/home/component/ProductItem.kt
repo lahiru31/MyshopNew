@@ -21,10 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.khadar3344.myshop.data.network.dto.Product
+import com.khadar3344.myshop.util.Dimensions
 
 @Composable
 fun ProductItem(
@@ -36,14 +35,14 @@ fun ProductItem(
             .fillMaxWidth()
             .padding(Dimensions.spacing_small)
             .clickable { onProductClicked.invoke(product) },
-        elevation = CardDefaults.cardElevation(5.dp),
-        shape = RoundedCornerShape(5.dp)
+        elevation = CardDefaults.cardElevation(Dimensions.spacing_small),
+        shape = RoundedCornerShape(Dimensions.spacing_small)
     ) {
         Column(
             modifier = Modifier
                 .clickable { onProductClicked.invoke(product) }
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(Dimensions.spacing_small)
         ) {
             ImageHolder(imageUrl = product.thumbnail)
 
@@ -53,16 +52,15 @@ fun ProductItem(
                 maxLines = 1,
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    fontSize = Dimensions.text_large
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
+                    .padding(vertical = Dimensions.spacing_small)
             )
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -70,25 +68,22 @@ fun ProductItem(
                     text = "Rating",
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
+                        fontSize = Dimensions.text_medium
                     ),
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = Dimensions.spacing_small)
                 )
                 StarRating(rating = product.rating.toFloat())
             }
-
-
 
             Text(
                 text = "$${product.price}",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
+                    fontSize = Dimensions.text_medium,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = Dimensions.spacing_small),
             )
         }
     }
@@ -102,7 +97,7 @@ fun ProductList(
     val listState = rememberLazyGridState()
     LazyVerticalGrid(
         state = listState,
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(Dimensions.gridColumns),
         modifier = Modifier
             .fillMaxSize()
             .height(700.dp),
@@ -111,10 +106,4 @@ fun ProductList(
             ProductItem(product = products[it], onProductClicked = onProductClicked)
         }
     }
-}
-
-@Preview
-@Composable
-fun StarRatingPreview() {
-    StarRating(rating = 3.0f)
 }

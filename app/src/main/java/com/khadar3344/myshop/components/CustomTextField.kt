@@ -1,6 +1,7 @@
 package com.khadar3344.myshop.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -39,8 +40,8 @@ fun CustomTextField(
             text = newText
             onChange(newText)
         },
-        label = { Text(text = label) },
-        shape = RoundedCornerShape(1.dp),
+        label = { Text(text = label, fontSize = Dimensions.text_medium) },
+        shape = RoundedCornerShape(Dimensions.spacing_small),
         trailingIcon = {
             Icon(
                 painter = painterResource(id = trailingIcon),
@@ -54,6 +55,8 @@ fun CustomTextField(
         keyboardActions = KeyboardActions(
             onNext = {}
         ),
-        modifier = Modifier.fillMaxWidth().padding(vertical = Dimensions.spacing_small)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = Dimensions.spacing_small)
     )
 }

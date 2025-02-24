@@ -7,9 +7,9 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
+import com.khadar3344.myshop.util.Dimensions
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -18,10 +18,9 @@ fun CategoryTabRow(
     categories: List<String>,
     onTabSelected:(Int) -> Unit
 ) {
-
     ScrollableTabRow(
         selectedTabIndex = pagerState.currentPage,
-        edgePadding = 0.dp,
+        edgePadding = Dimensions.spacing_small,
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer
     ) {
@@ -29,10 +28,14 @@ fun CategoryTabRow(
             Tab(
                 selected = pagerState.currentPage == index,
                 onClick = { onTabSelected(index) },
-                content =  {
+                content = {
                     Text(
                         text = category,
-                        modifier = Modifier.padding(vertical = Dimensions.spacing_small, horizontal = Dimensions.spacing_small)
+                        fontSize = Dimensions.text_medium,
+                        modifier = Modifier.padding(
+                            vertical = Dimensions.spacing_small,
+                            horizontal = Dimensions.spacing_small
+                        )
                     )
                 }
             )

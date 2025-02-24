@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import com.khadar3344.myshop.ui.theme.Purple40
 import com.khadar3344.myshop.util.Dimensions
 
@@ -32,7 +31,10 @@ fun SearchAppBar(
         modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = onInputValueChange,
-        textStyle = TextStyle(color = Purple40, fontSize = Dimensions.text_medium),
+        textStyle = TextStyle(
+            color = Purple40,
+            fontSize = Dimensions.text_medium
+        ),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
@@ -42,7 +44,7 @@ fun SearchAppBar(
         },
         placeholder = {
             Text(
-                text = "Search...", 
+                text = "Search...",
                 color = Purple40.copy(alpha = 0.7f),
                 fontSize = Dimensions.text_medium
             )
@@ -69,16 +71,5 @@ fun SearchAppBar(
             cursorColor = Purple40,
             focusedIndicatorColor = Purple40
         )
-    )
-}
-
-@Preview
-@Composable
-fun SearchAppBarPreview() {
-    SearchAppBar(
-        value = "",
-        onInputValueChange = {},
-        onCloseIconClicked = { /*TODO*/ },
-        onSearchIconClicked = {  }
     )
 }
